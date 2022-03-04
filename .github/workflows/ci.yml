@@ -1,0 +1,78 @@
+# NOTE: This name appears in GitHub's Checks API and in workflow's status badge.
+name: ci-reproducibility
+
+# Trigger the workflow when:
+on:
+  push:
+    branches:
+      - ci
+      - dev
+      - main
+  pull_request:
+    branches: [ main ]
+
+  # Besides pushes on the branches above, also check every day at 00:00 UTC.
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+
+  check-reproducible-build:
+    # NOTE: This name appears in GitHub's Checks API.
+    name: check-reproducibility
+    runs-on: ubuntu-latest
+    env:
+      sgx_detect: "843e854afb0865b890ce2f1fda3d24f87d1104885879f6fa3ad4557e9531f36b"
+      sgxs_append: "40fa7879924abdb5d72392b71aa3d19e048ea51a089c1ed4fa1da3609b998352"
+      sgxs_build: "710947acf207a1c6c885e13a1adb7c6c0bfc47f6733762d23527ada4d531675f"
+      sgxs_info: "c1548b4e2ee1140eaf85b5240aa86790caeb4c86a80921ae4d5e2e9ec5bcecb1"
+      sgxs_load: "0bdf2c3bc4bd438878bad6d19a3513dfd1239359290d974988a10b941796fb17"
+      sgxs_sign: "76fb3bffe8427b8b12b0721cd6ab1e9a0601ce5d463d86c2f3ab4cb160c9466c"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v16
+        with:
+          install_url: https://github.com/numtide/nix-unstable-installer/releases/download/nix-2.7.0pre20220225_fd4b693/install
+      - name: Install cachix
+        uses: cachix/cachix-action@v10
+        with:
+          name: initc3
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
+      - run: nix --version
+      - run: nix build
+      - run: nix build --rebuild
+      - run: nix flake check
+      - run: nix flake metadata
+      - run: nix flake show
+      - run: ls -l result
+
+        # TODO: Implement action to check the hash
+      - run: sha256sum result/bin/*
+      - name: Shasum check sgxs-detect
+        run: |
+          echo "$sgx_detect *result/bin/sgx-detect" | \
+            shasum --algorithm 512256 --binary --strict --check
+      - name: Shasum check sgxs-append
+        run: |
+          echo "$sgxs_append *result/bin/sgxs-append" | \
+            shasum --algorithm 512256 --binary --strict --check
+      - name: Shasum check sgxs-build
+        run: |
+          echo "$sgxs_build *result/bin/sgxs-build" | \
+            shasum --algorithm 512256 --binary --strict --check
+      - name: Shasum check sgxs-info
+        run: |
+          echo "$sgxs_info *result/bin/sgxs-info" | \
+            shasum --algorithm 512256 --binary --strict --check
+      - name: Shasum check sgxs-load
+        run: |
+          echo "$sgxs_load *result/bin/sgxs-load" | \
+            shasum --algorithm 512256 --binary --strict --check
+      - name: Shasum check sgxs-sign
+        run: |
+          echo "$sgxs_sign *result/bin/sgxs-sign" | \
+            shasum --algorithm 512256 --binary --strict --check
