@@ -1,1 +1,1 @@
-# nix flake for sgxs-tools crate
+# nix flake for `sgxs-tools` crate
