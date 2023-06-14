@@ -26,7 +26,7 @@
           llvmPackages_11.libclang.lib
           pkg-config
           protobuf
-          rust-bin.nightly."2021-11-04".default
+          rust-bin.stable.latest.default
         ];
 
         _buildInputs = with pkgs; [
@@ -37,14 +37,14 @@
           defaultPackage = rustPlatform.buildRustPackage rec {
             inherit _buildInputs _nativeBuildInputs;
             pname = "sgxs-tools";
-            version = "0.8.5";
+            version = "0.8.6";
 
             src = fetchCrate {
               inherit pname version;
-              sha256 = "sha256-zKzZOpdO3H1/4tKSdHLbyhY0iAuLoscEfgFDHsQbK3w=";
+              sha256 = "sha256-24lUhi4IPv+asM51/BfufkOUYVellXoXsbWXWN/zoBw=";
             };
 
-            cargoSha256 = "sha256-8PxIL/ZaJIocDlYD2fTZ6M2QYkssUq1LqlEHlOUO+U8=";
+            cargoSha256 = "sha256-vtuOCLo7qBOfqMynykqf9folmlETx3or35+CuTurh3s=";
 
             nativeBuildInputs = _nativeBuildInputs;
             buildInputs = _buildInputs;
