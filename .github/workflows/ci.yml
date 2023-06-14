@@ -22,22 +22,23 @@ jobs:
     name: check-reproducibility
     runs-on: ubuntu-latest
     env:
-      sgx_detect: "843e854afb0865b890ce2f1fda3d24f87d1104885879f6fa3ad4557e9531f36b"
-      sgxs_append: "40fa7879924abdb5d72392b71aa3d19e048ea51a089c1ed4fa1da3609b998352"
-      sgxs_build: "710947acf207a1c6c885e13a1adb7c6c0bfc47f6733762d23527ada4d531675f"
-      sgxs_info: "c1548b4e2ee1140eaf85b5240aa86790caeb4c86a80921ae4d5e2e9ec5bcecb1"
-      sgxs_load: "0bdf2c3bc4bd438878bad6d19a3513dfd1239359290d974988a10b941796fb17"
-      sgxs_sign: "76fb3bffe8427b8b12b0721cd6ab1e9a0601ce5d463d86c2f3ab4cb160c9466c"
+      sgx-detect: "86e4c58a469373807b433cfa8fb03f5ea24996bcae243656779bed2f4661b52f"
+      sgxs-append: "a7b10a8f4d599210d9f284243f834816afa32b954eea23c3aa5d8e4920ef495a"
+      sgxs-build: "2d82dc195a933b12063f904bb8cb98d735df1566b9da8691b879e3d6d7f3f060"
+      sgxs-info: "3d95559ae4225a22eda8d8c5852b3356f8cfd5ed83dcb3fb34d88cb79147a4fd"
+      sgxs-load: "c6f434eb2dfb9090bd02fea46986ffa2a76470b5b197d5ddd573e5b61b4b2429"
+      sgxs-sign: "733d48f2c480562798107d5b6cfd09e5a8092616116ecdf0a3ee776f9835d9d3"
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Install Nix
-        uses: cachix/install-nix-action@v16
+        uses: cachix/install-nix-action@v21
         with:
-          install_url: https://github.com/numtide/nix-unstable-installer/releases/download/nix-2.7.0pre20220225_fd4b693/install
+          nix_path: nixpkgs=channel:23.05
       - name: Install cachix
-        uses: cachix/cachix-action@v10
+        uses: cachix/cachix-action@v12
         with:
           name: initc3
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
