@@ -24,12 +24,12 @@ jobs:
     name: check-reproducibility
     runs-on: ubuntu-latest
     env:
-      sgx-detect: "86e4c58a469373807b433cfa8fb03f5ea24996bcae243656779bed2f4661b52f"
-      sgxs-append: "a7b10a8f4d599210d9f284243f834816afa32b954eea23c3aa5d8e4920ef495a"
-      sgxs-build: "2d82dc195a933b12063f904bb8cb98d735df1566b9da8691b879e3d6d7f3f060"
-      sgxs-info: "3d95559ae4225a22eda8d8c5852b3356f8cfd5ed83dcb3fb34d88cb79147a4fd"
-      sgxs-load: "c6f434eb2dfb9090bd02fea46986ffa2a76470b5b197d5ddd573e5b61b4b2429"
-      sgxs-sign: "733d48f2c480562798107d5b6cfd09e5a8092616116ecdf0a3ee776f9835d9d3"
+      sgx_detect: "86e4c58a469373807b433cfa8fb03f5ea24996bcae243656779bed2f4661b52f"
+      sgxs_append: "a7b10a8f4d599210d9f284243f834816afa32b954eea23c3aa5d8e4920ef495a"
+      sgxs_build: "2d82dc195a933b12063f904bb8cb98d735df1566b9da8691b879e3d6d7f3f060"
+      sgxs_info: "3d95559ae4225a22eda8d8c5852b3356f8cfd5ed83dcb3fb34d88cb79147a4fd"
+      sgxs_load: "c6f434eb2dfb9090bd02fea46986ffa2a76470b5b197d5ddd573e5b61b4b2429"
+      sgxs_sign: "733d48f2c480562798107d5b6cfd09e5a8092616116ecdf0a3ee776f9835d9d3"
 
     steps:
       - name: Checkout code
