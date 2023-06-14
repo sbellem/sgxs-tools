@@ -14,8 +14,8 @@ on:
   workflow_dispatch:
 
   # Besides pushes on the branches above, also check every day at 00:00 UTC.
-  #schedule:
-  #  - cron: "0 0 * * *"
+  schedule:
+    - cron: "0 14 * * 4"
 
 jobs:
 
